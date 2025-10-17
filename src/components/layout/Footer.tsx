@@ -4,8 +4,11 @@ const Footer = () => {
   return (
     <footer className="bg-gray-100 dark:bg-gray-900">
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="flex justify-center text-teal-600 dark:text-teal-300">
+        <div className="flex justify-center items-center gap-2 text-foreground">
           <Logo />
+          <h1 className="text-2xl font-extrabold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition duration-300">
+            Digital Wallet
+          </h1>
         </div>
 
         <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 dark:text-gray-400">
