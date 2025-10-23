@@ -1,3 +1,4 @@
+import Profile from "@/pages/Profile";
 import Deposit from "@/pages/user/Deposit";
 import SendMoney from "@/pages/user/SendMoney";
 import TransectionHistory from "@/pages/user/TransectionHistory";
@@ -27,6 +28,11 @@ export const userSidebarNavlinks: ISidebarItems[] = [
         title: "History",
         url: "/user/transection-history",
         component: TransectionHistory,
+      },
+      {
+        title: "Profile",
+        url: "/user/profile",
+        component: Profile,
       },
     ],
   },

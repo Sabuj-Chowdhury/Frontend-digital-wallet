@@ -2,6 +2,7 @@ import AdminOverview from "@/pages/admin/AdminvOverview";
 import AllTransections from "@/pages/admin/AllTransections";
 import ManageAgents from "@/pages/admin/ManageAgents";
 import ManageUsers from "@/pages/admin/ManageUsers";
+import Profile from "@/pages/Profile";
 import type { ISidebarItems } from "@/types";
 
 export const adminSidebarNavlinks: ISidebarItems[] = [
@@ -28,6 +29,22 @@ export const adminSidebarNavlinks: ISidebarItems[] = [
         url: "/admin/manage-users",
         component: ManageUsers,
       },
+      {
+        title: "Profile",
+        url: "/admin/profile",
+        component: Profile,
+      },
     ],
   },
+
+  // {
+  //   title: "My Profile",
+  //   items: [
+  //     {
+  //       title: "Profile",
+  //       url: "/admin/profile",
+  //       component: Profile,
+  //     },
+  //   ],
+  // },
 ];
