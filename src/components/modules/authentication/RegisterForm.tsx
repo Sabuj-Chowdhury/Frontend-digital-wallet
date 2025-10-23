@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff } from "lucide-react"; // 👁️ password toggle icons
+import { Eye, EyeOff } from "lucide-react";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 //  Zod schema
 const userSchema = z
@@ -43,6 +45,8 @@ export function RegisterForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const [register] = useRegisterMutation();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -58,8 +62,24 @@ export function RegisterForm({
     },
   });
 
-  function onSubmit(values: z.infer<typeof userSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof userSchema>) {
+    const userInfo = {
+      name: values.name,
+      phone: values.phone,
+      email: values.email,
+      password: values.password,
+      role: values.role,
+    };
+
+    try {
+      const result = await register(userInfo).unwrap();
+      console.log(result);
+      toast.success(result?.message);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
   }
 
   return (
