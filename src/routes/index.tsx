@@ -1,15 +1,15 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import About from "@/pages/About";
-import AgentAddMoney from "@/pages/agent/AgentAddMoney";
 import Features from "@/pages/Features";
 import LoginPage from "@/pages/LoginPage";
 import Pricing from "@/pages/Pricing";
 import RegisterPage from "@/pages/RegisterPage";
-import Deposit from "@/pages/user/Deposit";
 import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter } from "react-router";
 import { adminSidebarNavlinks } from "./adminSidebarNavlinks";
+import { userSidebarNavlinks } from "./userSidebarNavlinks";
+import { agentSidebarNavlinks } from "./agentSidebarNavlinks";
 
 export const router = createBrowserRouter([
   {
@@ -38,22 +38,12 @@ export const router = createBrowserRouter([
   {
     Component: DashboardLayout,
     path: "/user",
-    children: [
-      {
-        Component: Deposit,
-        path: "user-deposit",
-      },
-    ],
+    children: [...generateRoutes(userSidebarNavlinks)],
   },
   {
     Component: DashboardLayout,
     path: "/agent",
-    children: [
-      {
-        Component: AgentAddMoney,
-        path: "agent-add-money",
-      },
-    ],
+    children: [...generateRoutes(agentSidebarNavlinks)],
   },
 
   {
