@@ -15,6 +15,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Transaction", "Wallet"],
     }),
+    sendMoney: builder.mutation({
+      query: (payload) => ({
+        url: "/user/send-money",
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: ["Transaction", "Wallet"],
+    }),
     userTransectionInfo: builder.query({
       query: (slug) => ({
         url: `/transaction/${slug}`,
@@ -36,4 +44,5 @@ export const {
   useAddMoneyMutation,
   useUserTransectionInfoQuery,
   useWalletInfoQuery,
+  useSendMoneyMutation,
 } = userApi;

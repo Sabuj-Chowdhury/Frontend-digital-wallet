@@ -132,7 +132,7 @@ const UserOverview = () => {
                 >
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      {tx.meta?.source}
+                      {tx.meta?.method}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {tx.createdAt}

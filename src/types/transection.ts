@@ -6,7 +6,8 @@ export interface TransactionUser {
 }
 
 export interface TransactionMeta {
-  source?: string;
+  method?: string;
+  receiverPhone?: string;
   [key: string]: unknown; // in case there are more meta fields in future
 }
 
