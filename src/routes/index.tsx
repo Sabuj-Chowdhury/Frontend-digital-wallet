@@ -14,12 +14,17 @@ import { agentSidebarNavlinks } from "./agentSidebarNavlinks";
 import { role } from "@/constants/role";
 import type { TRole } from "@/types";
 import { withAuth } from "@/utils/withAuth";
+import HomePage from "@/pages/HomePage";
 
 export const router = createBrowserRouter([
   {
     Component: App,
     path: "/",
     children: [
+      {
+        index: true,
+        Component: HomePage,
+      },
       {
         Component: About,
         path: "about",
