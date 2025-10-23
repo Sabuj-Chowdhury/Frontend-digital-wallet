@@ -6,10 +6,14 @@ import LoginPage from "@/pages/LoginPage";
 import Pricing from "@/pages/Pricing";
 import RegisterPage from "@/pages/RegisterPage";
 import { generateRoutes } from "@/utils/generateRoutes";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarNavlinks } from "./adminSidebarNavlinks";
 import { userSidebarNavlinks } from "./userSidebarNavlinks";
 import { agentSidebarNavlinks } from "./agentSidebarNavlinks";
+
+import { role } from "@/constants/role";
+import type { TRole } from "@/types";
+import { withAuth } from "@/utils/withAuth";
 
 export const router = createBrowserRouter([
   {
@@ -30,20 +34,46 @@ export const router = createBrowserRouter([
       },
     ],
   },
+
+  //  {
+  //   Component: withAuth(DashboardLayout, role.superAdmin as TRole),
+  //   path: "/admin",
+  //   children: [
+  //     { index: true, element: <Navigate to="/admin/analytics" /> },
+  //     ...generateRoutes(adminSidebarItems),
+  //   ],
+  // },
+
   {
-    Component: DashboardLayout,
+    Component: withAuth(DashboardLayout, role.admin as TRole),
     path: "/admin",
-    children: [...generateRoutes(adminSidebarNavlinks)],
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/admin/overview" />,
+      },
+      ...generateRoutes(adminSidebarNavlinks),
+    ],
   },
   {
-    Component: DashboardLayout,
+    Component: withAuth(DashboardLayout, role.user as TRole),
     path: "/user",
-    children: [...generateRoutes(userSidebarNavlinks)],
+    children: [
+      { index: true, element: <Navigate to="/user/overview" /> },
+
+      ...generateRoutes(userSidebarNavlinks),
+    ],
   },
   {
-    Component: DashboardLayout,
+    Component: withAuth(DashboardLayout, role.agent as TRole),
     path: "/agent",
-    children: [...generateRoutes(agentSidebarNavlinks)],
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/agent/overview" />,
+      },
+      ...generateRoutes(agentSidebarNavlinks),
+    ],
   },
 
   {

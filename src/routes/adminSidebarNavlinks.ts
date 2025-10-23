@@ -1,3 +1,4 @@
+import AdminOverview from "@/pages/admin/AdminvOverview";
 import AllTransections from "@/pages/admin/AllTransections";
 import ManageAgents from "@/pages/admin/ManageAgents";
 import ManageUsers from "@/pages/admin/ManageUsers";
@@ -7,6 +8,11 @@ export const adminSidebarNavlinks: ISidebarItems[] = [
   {
     title: "Dashboard",
     items: [
+      {
+        title: "Overview",
+        url: "/admin/overview",
+        component: AdminOverview,
+      },
       {
         title: "All transection",
         url: "/admin/all-transection",
