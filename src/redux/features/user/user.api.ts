@@ -1,23 +1,39 @@
 import { baseApi } from "@/redux/baseApi";
+import type { DepositResponse } from "@/types";
+
+export interface AddMoneyPayload {
+  amount: number;
+}
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation({
-      query: (userInfo) => ({
-        url: "/user/register",
+    addMoney: builder.mutation<DepositResponse, AddMoneyPayload>({
+      query: (payload) => ({
+        url: "/user/add-money",
         method: "POST",
-        data: userInfo,
+        data: payload,
       }),
+      invalidatesTags: ["Transaction", "Wallet"],
     }),
-
-    userInfo: builder.query({
-      query: () => ({
-        url: "/user/me",
+    userTransectionInfo: builder.query({
+      query: (slug) => ({
+        url: `/transaction/${slug}`,
         method: "GET",
       }),
-      providesTags: ["USER"],
+      providesTags: ["Transaction"],
+    }),
+    walletInfo: builder.query({
+      query: (slug) => ({
+        url: `/wallet/${slug}`,
+        method: "GET",
+      }),
+      providesTags: ["Wallet"],
     }),
   }),
 });
 
-export const {} = userApi;
+export const {
+  useAddMoneyMutation,
+  useUserTransectionInfoQuery,
+  useWalletInfoQuery,
+} = userApi;

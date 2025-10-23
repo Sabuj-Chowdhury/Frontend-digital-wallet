@@ -1,8 +1,7 @@
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
-import { useWalletInfoQuery } from "@/redux/features/wallet/wallet.api";
-import { useUserTransectionInfoQuery } from "@/redux/features/transection/transection.api";
+
 import {
   ArrowUpRight,
   ArrowDownRight,
@@ -11,6 +10,11 @@ import {
   History,
 } from "lucide-react";
 import { Link } from "react-router";
+import {
+  useUserTransectionInfoQuery,
+  useWalletInfoQuery,
+} from "@/redux/features/user/user.api";
+import type { TransactionData } from "@/types/transection";
 
 const UserOverview = () => {
   const { data: userData } = useUserInfoQuery(undefined);
@@ -25,7 +29,7 @@ const UserOverview = () => {
 
   const wallet = walletData?.data;
   const transactions = transectionData?.data || [];
-  // console.log(transactions);
+  console.log(transactions);
   // console.log(wallet);
   // console.log(wallet?.wallet?._id);
 
@@ -121,23 +125,28 @@ const UserOverview = () => {
         <CardContent>
           {transactions.length > 0 ? (
             <div className="space-y-4">
-              {transactions.slice(0, 5).map((tx) => (
+              {transactions.slice(0, 5).map((tx: TransactionData) => (
                 <div
-                  key={tx.id}
+                  key={tx._id}
                   className="flex items-center justify-between border-b pb-3 last:border-none"
                 >
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      {tx.type}
+                      {tx.meta?.source}
                     </p>
-                    <p className="text-xs text-muted-foreground">{tx.date}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {tx.createdAt}
+                    </p>
                   </div>
                   <p
                     className={`font-semibold ${
-                      tx.type === "credit" ? "text-green-500" : "text-red-500"
+                      tx.type === "ADD_MONEY"
+                        ? "text-green-500"
+                        : "text-red-500"
                     }`}
                   >
-                    {tx.type === "credit" ? "+" : "-"}${tx.amount}
+                    {tx.type === "ADD_MONEY" ? "+" : "-"}
+                    {tx.amount} BDT
                   </p>
                 </div>
               ))}
