@@ -80,7 +80,7 @@ export default function Navbar() {
           {/* Main nav */}
           <div className="flex items-center gap-6">
             <div className="flex items-center justify-center gap-2">
-              <Link to="/" className="text-primary hover:text-primary/90">
+              <Link to="/" className="text-foreground hover:text-primary/90">
                 <Logo />
               </Link>
               <h1 className="text-2xl font-extrabold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition duration-300">
@@ -107,11 +107,9 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
-          </Button>
-          <Button asChild size="sm" className="text-sm">
-            <a href="#">Get Started</a>
+
+          <Button asChild className="text-sm">
+            <Link to="/login">Login</Link>
           </Button>
         </div>
       </div>
