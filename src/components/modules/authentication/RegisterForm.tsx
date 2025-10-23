@@ -73,7 +73,7 @@ export function RegisterForm({
 
     try {
       const result = await register(userInfo).unwrap();
-      console.log(result);
+      // console.log(result);
       toast.success(result?.message);
       navigate("/login");
     } catch (error) {

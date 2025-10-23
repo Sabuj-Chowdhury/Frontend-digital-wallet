@@ -52,13 +52,13 @@ export function LoginForm({
     try {
       const result = await login(values).unwrap();
       toast.success(result.message);
-      console.log(result);
+      // console.log(result);
       navigate("/");
     } catch (error) {
       toast.error("something went wrong!");
       console.log(error);
     }
-    console.log(values);
+    // console.log(values);
   }
 
   return (
