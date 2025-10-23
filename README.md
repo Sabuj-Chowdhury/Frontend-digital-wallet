@@ -171,13 +171,6 @@ npm run preview
 - Accessible and user-friendly interface
 - Skeleton loaders for data delays
 
-## 🎨 UI / UX
-
-- Built with **ShadCN components** & **TailwindCSS** for a modern, clean look.
-- Fully responsive and accessible.
-- Interactive elements with subtle animations.
-- Dark/Light mode toggle.
-
 ---
 
 ## 📜 Notes
