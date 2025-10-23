@@ -3,6 +3,7 @@ import Deposit from "@/pages/user/Deposit";
 import SendMoney from "@/pages/user/SendMoney";
 import TransectionHistory from "@/pages/user/TransectionHistory";
 import UserOverview from "@/pages/user/UserOverview";
+import Withdraw from "@/pages/user/Withdraw";
 import type { ISidebarItems } from "@/types";
 
 export const userSidebarNavlinks: ISidebarItems[] = [
@@ -23,6 +24,11 @@ export const userSidebarNavlinks: ISidebarItems[] = [
         title: "Send Money",
         url: "/user/send-money",
         component: SendMoney,
+      },
+      {
+        title: "Withdraw Money",
+        url: "/user/withdraw-money",
+        component: Withdraw,
       },
       {
         title: "History",

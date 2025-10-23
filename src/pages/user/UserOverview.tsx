@@ -3,7 +3,14 @@ import { Button } from "@/components/ui/button";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useWalletInfoQuery } from "@/redux/features/wallet/wallet.api";
 import { useUserTransectionInfoQuery } from "@/redux/features/transection/transection.api";
-import { ArrowUpRight, ArrowDownRight, Plus, Wallet } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowDownRight,
+  Plus,
+  Wallet,
+  History,
+} from "lucide-react";
+import { Link } from "react-router";
 
 const UserOverview = () => {
   const { data: userData } = useUserInfoQuery(undefined);
@@ -53,24 +60,56 @@ const UserOverview = () => {
       </Card>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        <Button className="flex flex-col items-center justify-center h-24 rounded-xl shadow">
-          <Plus className="w-5 h-5 mb-2" />
-          <span>Add Money</span>
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <Button
+          variant="outline"
+          className="flex flex-col items-center justify-center h-24 rounded-xl"
+        >
+          <Link
+            to="/user/add-money"
+            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+          >
+            <Plus className="w-5 h-5 mb-2" />
+            <span>Add Money</span>
+          </Link>
         </Button>
         <Button
           variant="outline"
           className="flex flex-col items-center justify-center h-24 rounded-xl"
         >
-          <ArrowUpRight className="w-5 h-5 mb-2" />
-          <span>Send</span>
+          <Link
+            to="/user/send-money"
+            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+          >
+            <ArrowUpRight className="w-5 h-5 mb-2" />
+            <span>Send</span>
+          </Link>
         </Button>
+
         <Button
           variant="outline"
           className="flex flex-col items-center justify-center h-24 rounded-xl"
         >
-          <ArrowDownRight className="w-5 h-5 mb-2" />
-          <span>Receive</span>
+          <Link
+            to="/user/withdraw-money"
+            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+          >
+            <ArrowDownRight className="w-5 h-5 mb-2" />
+            <span>Withdraw Money</span>
+          </Link>
+        </Button>
+
+        <Button
+          variant="outline"
+          className="flex flex-col items-center justify-center h-24 rounded-xl"
+        >
+          <Link
+            to="/user/transection-history"
+            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+          >
+            <History className="w-5 h-5 mb-2" />
+            View All Transactions
+          </Link>
         </Button>
       </div>
 
