@@ -47,3 +47,30 @@ export interface UserWithdrawResponse {
   message: string;
   data: UserWithdrawData;
 }
+
+export interface AgentCashInData {
+  message: string;
+  amount: number;
+  fee?: number;
+  userWallet?: {
+    balance: number;
+    cashIn: number;
+  };
+  agentWallet?: {
+    balance: number;
+  };
+  agent?: {
+    name: string;
+    phone: string;
+  };
+  user?: {
+    name: string;
+    phone: string;
+  };
+}
+
+export interface AgentCashInResponse {
+  success: boolean;
+  message: string;
+  data: AgentCashInData;
+}
