@@ -16,6 +16,9 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Wallet"],
     }),
+
+    //   query: () => `/transactions?page=${page}&limit=${limit}`,
+
     allTransactions: builder.query({
       query: () => ({
         url: `/transaction/all-transactions`,

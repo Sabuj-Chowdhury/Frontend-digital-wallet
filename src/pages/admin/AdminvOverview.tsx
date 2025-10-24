@@ -18,10 +18,10 @@ import {
   DollarSign,
   TrendingUp,
   ArrowUpRight,
-  ArrowDownRight,
   PlusCircle,
   MinusCircle,
   CreditCard,
+  Loader2,
 } from "lucide-react";
 
 const AdminOverview = () => {
@@ -31,7 +31,11 @@ const AdminOverview = () => {
     useAllTransactionsQuery(undefined);
 
   if (usersLoading || transactionsLoading) {
-    return <p className="text-muted-foreground">Loading...</p>;
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin h-10 w-10 text-primary" />
+      </div>
+    );
   }
 
   const users = usersData?.data || [];
