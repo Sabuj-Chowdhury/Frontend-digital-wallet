@@ -35,6 +35,14 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
+    userBlockOrActive: builder.mutation({
+      query: (payload) => ({
+        url: `/user/status`,
+        method: "PATCH",
+        data: payload,
+      }),
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
@@ -43,4 +51,5 @@ export const {
   useAllTransactionsQuery,
   useAllWalletsQuery,
   useBlockOrActiveMutation,
+  useUserBlockOrActiveMutation,
 } = adminApi;
