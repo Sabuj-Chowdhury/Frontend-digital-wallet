@@ -22,7 +22,7 @@ const Hero = () => {
             className="bg-foreground text-background hover:bg-foreground/90"
             size="lg"
           >
-            Get Started
+            <Link to="/registration"> Get Started</Link>
           </Button>
           <Button
             variant="outline"
