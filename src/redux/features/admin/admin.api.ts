@@ -16,7 +16,6 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Wallet"],
     }),
-
     //   query: () => `/transactions?page=${page}&limit=${limit}`,
 
     allTransactions: builder.query({
@@ -26,8 +25,22 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Transaction"],
     }),
+
+    // /agent/status
+    blockOrActive: builder.mutation({
+      query: (payload) => ({
+        url: `/agent/status`,
+        method: "PATCH",
+        data: payload,
+      }),
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
-export const { useAllUsersQuery, useAllTransactionsQuery, useAllWalletsQuery } =
-  adminApi;
+export const {
+  useAllUsersQuery,
+  useAllTransactionsQuery,
+  useAllWalletsQuery,
+  useBlockOrActiveMutation,
+} = adminApi;

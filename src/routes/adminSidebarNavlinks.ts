@@ -20,12 +20,12 @@ export const adminSidebarNavlinks: ISidebarItems[] = [
         component: AllTransections,
       },
       {
-        title: "Agents",
+        title: "Manage Agents",
         url: "/admin/mange-agents",
         component: ManageAgents,
       },
       {
-        title: "Users",
+        title: "Manage Users",
         url: "/admin/manage-users",
         component: ManageUsers,
       },
