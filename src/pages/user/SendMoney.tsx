@@ -59,7 +59,7 @@ const SendMoney = () => {
     }
   };
 
-  console.log(transactionData);
+  // console.log(transactionData);
 
   const handleDialogClose = () => {
     setShowDialog(false);

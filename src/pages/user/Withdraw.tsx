@@ -10,13 +10,12 @@ import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Info } from "lucide-react";
 import { motion } from "framer-motion";
 import { useWithdrawMoneyMutation } from "@/redux/features/user/user.api";
 import { useNavigate } from "react-router";
@@ -58,12 +57,17 @@ const Withdraw = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-[80vh]">
+      <div className="flex justify-center items-center min-h-[80vh] px-4">
         <Card className="w-full max-w-md border border-border shadow-lg rounded-2xl bg-muted/50 backdrop-blur-md">
           <CardHeader className="text-center pb-2">
             <CardTitle className="text-3xl font-light text-foreground flex items-center justify-center gap-2">
               💸 Withdraw Money
             </CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">
+              <Info className="inline w-4 h-4 mr-1" /> Only transfers to other
+              agents are allowed. Cannot withdraw to yourself. Withdrawal fee:
+              5%.
+            </p>
           </CardHeader>
 
           <CardContent className="space-y-6 pt-4">
@@ -106,7 +110,7 @@ const Withdraw = () => {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full h-11 text-base rounded-xl"
+                className="w-full h-11 text-base rounded-xl flex justify-center items-center"
                 disabled={isLoading}
               >
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -119,10 +123,6 @@ const Withdraw = () => {
 
       {/*  Success Dialog */}
       <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
-        <AlertDialogDescription className="sr-only">
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
-        </AlertDialogDescription>
         <AlertDialogContent className="sm:max-w-md rounded-2xl p-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -146,9 +146,6 @@ const Withdraw = () => {
                 <strong>Your New Balance:</strong> ৳
                 {result?.userWallet?.balance}
               </p>
-              {/* <p>
-                <strong>Agent Balance:</strong> ৳{result?.agentWallet?.balance}
-              </p> */}
               <p>
                 <strong>Agent:</strong> {result?.agent?.name} (
                 {result?.agent?.phone})
