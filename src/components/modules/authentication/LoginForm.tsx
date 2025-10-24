@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
 
@@ -37,7 +37,7 @@ export function LoginForm({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [showPassword, setShowPassword] = useState(false);
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof userSchema>>({
@@ -60,6 +60,13 @@ export function LoginForm({
     }
     // console.log(values);
   }
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin h-10 w-10 text-primary" />
+      </div>
+    );
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
