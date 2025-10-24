@@ -59,6 +59,8 @@ const SendMoney = () => {
     }
   };
 
+  console.log(transactionData);
+
   const handleDialogClose = () => {
     setShowDialog(false);
     navigate("/user/overview");
@@ -160,12 +162,12 @@ const SendMoney = () => {
                 <strong>Status:</strong>{" "}
                 {transactionData.data?.status ?? "Success"}
               </p>
-              <p>
+              {/* <p>
                 <strong>Date:</strong>{" "}
                 {transactionData.data?.createdAt
                   ? new Date(transactionData.data.createdAt).toLocaleString()
                   : "N/A"}
-              </p>
+              </p> */}
             </div>
           )}
 
