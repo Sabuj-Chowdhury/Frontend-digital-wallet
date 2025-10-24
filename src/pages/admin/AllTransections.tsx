@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { Transaction } from "@/types/adminOverviewTypes";
 
 const AllTransactions = () => {
   const { data, isLoading } = useAllTransactionsQuery(undefined);
@@ -43,19 +44,19 @@ const AllTransactions = () => {
     );
   }
 
-  const transactions = data?.data?.data || [];
+  const transactions: Transaction[] = data?.data?.data || [];
 
   // Apply filter by type
   let filteredTransactions =
     filterType === "ALL"
       ? transactions
-      : transactions.filter((tx) => tx.type === filterType);
+      : transactions.filter((tx: Transaction) => tx.type === filterType);
 
   // Apply search filter
   if (searchQuery.trim()) {
     const query = searchQuery.toLowerCase();
     filteredTransactions = filteredTransactions.filter(
-      (tx) =>
+      (tx: Transaction) =>
         tx.fromUser?.name?.toLowerCase().includes(query) ||
         tx.toUser?.name?.toLowerCase().includes(query) ||
         tx.meta?.receiverPhone?.toLowerCase().includes(query) ||
@@ -165,7 +166,7 @@ const AllTransactions = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              paginatedTransactions.map((tx) => (
+              paginatedTransactions.map((tx: Transaction) => (
                 <TableRow
                   key={tx._id}
                   className="hover:bg-muted/50 transition-colors"

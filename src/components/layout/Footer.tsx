@@ -13,8 +13,8 @@ const Footer = () => {
         </div>
 
         <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 dark:text-gray-400">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-          consequuntur amet culpa cum itaque neque.
+          Simplify your finances — send, receive, and manage your money securely
+          from anywhere, anytime.
         </p>
 
         <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
@@ -144,6 +144,9 @@ const Footer = () => {
             </a>
           </li>
         </ul>
+        <p className="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
+          © {new Date().getFullYear()} Digital Wallet — Built by Sabuj Chowdhury
+        </p>
       </div>
     </footer>
   );

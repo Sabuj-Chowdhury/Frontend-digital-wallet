@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import type { User } from "@/types/user";
 
 const ManageAgents = () => {
   const { data: userData, isLoading } = useAllUsersQuery(undefined);
@@ -28,7 +29,9 @@ const ManageAgents = () => {
     );
   }
 
-  const agents = (userData?.data || []).filter((user) => user.role === "AGENT");
+  const agents: User[] = (userData?.data || []).filter(
+    (user: User) => user.role === "AGENT"
+  );
 
   const handleStatusChange = async (
     id: string,
@@ -78,7 +81,7 @@ const ManageAgents = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              agents.map((agent) => (
+              agents.map((agent: User) => (
                 <TableRow
                   key={agent._id}
                   className="hover:bg-muted/50 transition-colors"

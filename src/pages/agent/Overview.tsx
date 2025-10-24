@@ -20,6 +20,7 @@ import {
   Activity,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import type { TransactionData } from "@/types/transection";
 
 const Overview = () => {
   const { data: userData, isLoading: isUserLoading } =
@@ -40,8 +41,8 @@ const Overview = () => {
 
   const isLoading = isUserLoading || isWalletLoading || isTranLoading;
   const wallet = walletData?.data;
-  const transactions = transectionData?.data || [];
-  console.log(transactions);
+  const transactions: TransactionData[] = transectionData?.data || [];
+  // console.log(transactions);
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-[60vh]">
@@ -50,11 +51,11 @@ const Overview = () => {
     );
 
   const totalCashIn = transactions
-    .filter((tx) => tx.type === "CASH_IN")
-    .reduce((sum, tx) => sum + tx.amount, 0);
+    .filter((tx: TransactionData) => tx.type === "CASH_IN")
+    .reduce((sum: number, tx: TransactionData) => sum + tx.amount, 0);
   const totalCashOut = transactions
-    .filter((tx) => tx.type === "CASH_OUT")
-    .reduce((sum, tx) => sum + tx.amount, 0);
+    .filter((tx: TransactionData) => tx.type === "CASH_OUT")
+    .reduce((sum: number, tx: TransactionData) => sum + tx.amount, 0);
 
   return (
     <div className="space-y-8 p-6 bg-gradient-to-br from-background to-muted/20 rounded-2xl shadow-sm">
@@ -184,7 +185,7 @@ const Overview = () => {
                             tx.status === "COMPLETED"
                               ? "default"
                               : tx.status === "PENDING"
-                              ? "warning"
+                              ? "secondary"
                               : "destructive"
                           }
                         >

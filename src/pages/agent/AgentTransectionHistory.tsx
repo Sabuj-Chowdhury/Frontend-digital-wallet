@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import OriginPagination from "@/components/OriginPagination";
+import type { TransactionData } from "@/types/transection";
 
 const AgentTransactionHistory = () => {
   const { data: userData } = useUserInfoQuery(undefined);
@@ -27,12 +28,12 @@ const AgentTransactionHistory = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const transactions = transectionData?.data || [];
+  const transactions: TransactionData[] = transectionData?.data || [];
 
   const totalPages = Math.ceil(transactions.length / itemsPerPage);
 
   // Paginate transactions
-  const paginatedTransactions = transactions.slice(
+  const paginatedTransactions: TransactionData[] = transactions.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -112,7 +113,7 @@ const AgentTransactionHistory = () => {
                             tx.status === "COMPLETED"
                               ? "default"
                               : tx.status === "PENDING"
-                              ? "warning"
+                              ? "secondary"
                               : "destructive"
                           }
                         >

@@ -11,6 +11,7 @@ import {
   useAllTransactionsQuery,
   useAllUsersQuery,
 } from "@/redux/features/admin/admin.api";
+import type { Transaction, User } from "@/types/adminOverviewTypes";
 import {
   Users,
   UserCheck,
@@ -41,20 +42,28 @@ const AdminOverview = () => {
   const users = usersData?.data || [];
   const transactions = transactionsData?.data?.data || [];
 
-  const totalUsers = users.filter((u) => u.role === "USER").length;
-  const totalAgents = users.filter((u) => u.role === "AGENT").length;
-  const totalAdmins = users.filter((u) => u.role === "ADMIN").length;
+  const totalUsers = users.filter((u: User) => u.role === "USER").length;
+  const totalAgents = users.filter((u: User) => u.role === "AGENT").length;
+  const totalAdmins = users.filter((u: User) => u.role === "ADMIN").length;
   const totalTransactions = transactions.length;
   const totalVolume = transactions.reduce(
-    (acc, tx) => acc + (tx.amount || 0),
+    (acc: number, tx: Transaction) => acc + (tx.amount || 0),
     0
   );
 
+  // const latestTransactions = [...transactions]
+  //   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  //   .slice(0, 5);
+
+  // ✅ Convert Dates to timestamps for arithmetic
   const latestTransactions = [...transactions]
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .sort(
+      (a: Transaction, b: Transaction) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
     .slice(0, 5);
 
-  const typeColor = (type) => {
+  const typeColor = (type: string) => {
     switch (type) {
       case "ADD_MONEY":
         return "bg-green-100 text-green-700";
@@ -69,7 +78,7 @@ const AdminOverview = () => {
     }
   };
 
-  const typeIcon = (type) => {
+  const typeIcon = (type: string) => {
     switch (type) {
       case "ADD_MONEY":
         return <PlusCircle className="inline w-4 h-4 mr-1" />;
@@ -84,7 +93,7 @@ const AdminOverview = () => {
     }
   };
 
-  const statusColor = (status) =>
+  const statusColor = (status: string) =>
     status === "COMPLETED"
       ? "bg-green-100 text-green-700"
       : "bg-red-100 text-red-700";
@@ -145,8 +154,8 @@ const AdminOverview = () => {
 
       {/* Latest Transactions Table */}
       <div className="overflow-x-auto rounded-lg shadow-md">
-        <Table className="min-w-full bg-white">
-          <TableHeader className="bg-gray-50">
+        <Table className="min-w-full ">
+          <TableHeader className="bg-muted">
             <TableRow>
               <TableHead>Type</TableHead>
               <TableHead>Amount</TableHead>

@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { TransactionData } from "@/types/transection";
 
 const TransectionHistory = () => {
   const { data: userData } = useUserInfoQuery(undefined);
@@ -42,17 +43,19 @@ const TransectionHistory = () => {
       </div>
     );
 
-  const transactions = transectionData?.data || [];
+  const transactions: TransactionData[] = transectionData?.data || [];
 
   // Filter transactions by type
-  const filteredTransactions =
+  const filteredTransactions: TransactionData[] =
     filterType === "ALL"
       ? transactions
-      : transactions.filter((tran) => tran.type === filterType);
+      : transactions.filter(
+          (tran: TransactionData) => tran.type === filterType
+        );
 
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
 
-  const paginatedTransactions = filteredTransactions.slice(
+  const paginatedTransactions: TransactionData[] = filteredTransactions.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );

@@ -15,6 +15,7 @@ import { Loader2 } from "lucide-react";
 
 import { toast } from "sonner";
 import { useState } from "react";
+import type { User } from "@/types/user";
 
 const ManageUsers = () => {
   const { data: userData, isLoading } = useAllUsersQuery(undefined);
@@ -31,7 +32,9 @@ const ManageUsers = () => {
   }
 
   // Filter only users with role "USER"
-  const users = (userData?.data || []).filter((user) => user.role === "USER");
+  const users: User[] = (userData?.data || []).filter(
+    (user: User) => user.role === "USER"
+  );
 
   // ACTIVE or BLOCKED"
 
@@ -84,7 +87,7 @@ const ManageUsers = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              users.map((user) => (
+              users.map((user: User) => (
                 <TableRow
                   key={user._id}
                   className="hover:bg-muted/50 transition-colors"
