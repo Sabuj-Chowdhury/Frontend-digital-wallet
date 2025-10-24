@@ -19,46 +19,43 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-import { Loader2, Send } from "lucide-react";
-import { useAgentSendMoneyMutation } from "@/redux/features/user/user.api";
+import { Loader2, Banknote, Info } from "lucide-react";
+import { useAgentCashOutMutation } from "@/redux/features/user/user.api";
 import type { AgentCashInData, AgentCashInResponse } from "@/types";
 
 // ✅ Validation Schema
-const sendMoneySchema = z.object({
-  receiverPhone: z
-    .string()
-    .min(11, "Receiver phone number is required")
-    .regex(/^(\+8801|01)[0-9]{9}$/, "Enter a valid Bangladeshi number"),
+const cashOutSchema = z.object({
+  receiverPhone: z.string().min(11, "Agent phone number is required"),
   amount: z
     .number()
     .min(1, "Amount must be greater than 0")
     .positive("Enter a valid amount"),
 });
 
-type SendMoneyForm = z.infer<typeof sendMoneySchema>;
+type CashOutForm = z.infer<typeof cashOutSchema>;
 
-const AgentSendMoney = () => {
+const AgentCashOut = () => {
   const navigate = useNavigate();
-  const [sendMoney, { isLoading }] = useAgentSendMoneyMutation();
+  const [cashOut, { isLoading }] = useAgentCashOutMutation();
   const [result, setResult] = useState<AgentCashInData>();
   const [openDialog, setOpenDialog] = useState(false);
 
-  const form = useForm<SendMoneyForm>({
-    resolver: zodResolver(sendMoneySchema),
+  const form = useForm<CashOutForm>({
+    resolver: zodResolver(cashOutSchema),
     defaultValues: { receiverPhone: "", amount: 0 },
   });
 
-  const onSubmit = async (data: SendMoneyForm) => {
+  const onSubmit = async (data: CashOutForm) => {
     try {
-      const res: AgentCashInResponse = await sendMoney(data).unwrap();
+      const res: AgentCashInResponse = await cashOut(data).unwrap();
       setResult(res?.data);
       setOpenDialog(true);
-      toast.success("Cash-In Successful 💸", {
-        description: `You’ve successfully sent ৳${data.amount} to ${data.receiverPhone}.`,
+      toast.success("Cash-Out Successful 💵", {
+        description: `You have successfully withdrawn ৳${data.amount}.`,
       });
       form.reset();
     } catch (error: any) {
-      toast.error("Cash-In Failed", {
+      toast.error("Cash-Out Failed", {
         description: error?.data?.message || "Something went wrong.",
       });
     }
@@ -69,9 +66,12 @@ const AgentSendMoney = () => {
       <Card className="w-full max-w-md border border-border bg-muted/40 backdrop-blur-sm rounded-2xl shadow-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-semibold flex items-center justify-center gap-2 text-foreground">
-            <Send className="w-6 h-6 text-primary" />
-            Agent Send Money
+            <Banknote className="w-6 h-6 text-primary" />
+            Agent Cash Out
           </CardTitle>
+          <p className="text-sm text-muted-foreground mt-2 flex items-center justify-center gap-1">
+            <Info size={14} /> Withdraw funds from your wallet securely.
+          </p>
         </CardHeader>
 
         <CardContent className="pt-2">
@@ -79,9 +79,9 @@ const AgentSendMoney = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 text-sm"
           >
-            {/* Receiver Phone */}
+            {/* Agent Phone */}
             <div className="space-y-2">
-              <Label className="text-foreground/80">Receiver Phone</Label>
+              <Label className="text-foreground/80">User Phone</Label>
               <Input
                 type="text"
                 placeholder="+8801XXXXXXXXX"
@@ -123,7 +123,7 @@ const AgentSendMoney = () => {
                   Processing...
                 </>
               ) : (
-                "Send Money"
+                "Cash Out"
               )}
             </Button>
           </form>
@@ -140,10 +140,10 @@ const AgentSendMoney = () => {
           >
             <DialogHeader>
               <DialogTitle className="text-green-600 text-xl flex items-center gap-2">
-                ✅ Cash-In Successful
+                ✅ Cash-Out Successful
               </DialogTitle>
               <DialogDescription>
-                Funds have been successfully transferred to the user.
+                Funds have been successfully withdrawn from your account.
               </DialogDescription>
             </DialogHeader>
 
@@ -153,16 +153,14 @@ const AgentSendMoney = () => {
                   <strong>Amount:</strong> ৳{result.amount}
                 </p>
                 <p>
-                  <strong>Receiver:</strong> {result?.user?.name} (
-                  {result?.user?.phone})
+                  <strong>Agent:</strong> {result?.agent?.name} (
+                  {result?.agent?.phone})
                 </p>
                 <p>
-                  <strong>Your New Balance:</strong> ৳
-                  {result?.agentWallet?.balance}
+                  <strong>New Balance:</strong> ৳{result?.agentWallet?.balance}
                 </p>
                 {/* <p>
-                  <strong>Total Cash-In Done:</strong> ৳
-                  {result?.agentWallet?.cashIn}
+                  <strong>Total Cash-Out Done:</strong> ৳{result?.agentWallet?.cashOut}
                 </p> */}
               </div>
             )}
@@ -185,4 +183,4 @@ const AgentSendMoney = () => {
   );
 };
 
-export default AgentSendMoney;
+export default AgentCashOut;

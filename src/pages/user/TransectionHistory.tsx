@@ -33,7 +33,7 @@ const TransectionHistory = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterType, setFilterType] = useState("ALL"); // Filter state
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   if (isLoading)
     return (

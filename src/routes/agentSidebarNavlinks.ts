@@ -1,7 +1,8 @@
-import AgentAddMoney from "@/pages/agent/AgentAddMoney";
+import AgentCashOut from "@/pages/agent/AgentCashOut";
 import AgentSendMoney from "@/pages/agent/AgentSendMoney";
 import AgentTransectionHistory from "@/pages/agent/AgentTransectionHistory";
 import Overview from "@/pages/agent/Overview";
+
 import Profile from "@/pages/Profile";
 import type { ISidebarItems } from "@/types";
 
@@ -15,13 +16,13 @@ export const agentSidebarNavlinks: ISidebarItems[] = [
         component: Overview,
       },
       {
-        title: "Add Money",
-        url: "/agent/agent-add-money",
-        component: AgentAddMoney,
+        title: "Cash out",
+        url: "/agent/cash-out",
+        component: AgentCashOut,
       },
       {
-        title: "Send Money",
-        url: "/agent/agent-send-money",
+        title: "Cash in",
+        url: "/agent/cash-in",
         component: AgentSendMoney,
       },
       {
