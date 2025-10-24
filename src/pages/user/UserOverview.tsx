@@ -133,6 +133,10 @@ const UserOverview = () => {
                   <div>
                     <p className="text-sm font-medium text-foreground">
                       {tx.meta?.method}
+                      {tx.meta?.agentPhone &&
+                        ` • Agent: ${tx.meta?.agentPhone}`}
+                      {tx.meta?.receiverPhone &&
+                        ` • Receiver: ${tx.meta?.receiverPhone}`}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {tx.createdAt}

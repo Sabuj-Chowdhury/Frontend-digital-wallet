@@ -8,6 +8,8 @@ export interface TransactionUser {
 export interface TransactionMeta {
   method?: string;
   receiverPhone?: string;
+
+  agentPhone?: string;
   [key: string]: unknown; // in case there are more meta fields in future
 }
 
