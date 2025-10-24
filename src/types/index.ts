@@ -25,3 +25,25 @@ export interface DepositResponse {
   message: string;
   data: DepositData;
 }
+
+export interface UserWithdrawData {
+  message: string;
+  amount: number;
+  fee: number;
+  userWallet: {
+    balance: number;
+  };
+  agentWallet: {
+    balance: number;
+  };
+  agent: {
+    name: string;
+    phone: string;
+  };
+}
+
+export interface UserWithdrawResponse {
+  success: boolean;
+  message: string;
+  data: UserWithdrawData;
+}

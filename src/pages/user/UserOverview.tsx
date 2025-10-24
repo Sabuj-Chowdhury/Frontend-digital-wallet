@@ -29,7 +29,7 @@ const UserOverview = () => {
 
   const wallet = walletData?.data;
   const transactions = transectionData?.data || [];
-  console.log(transactions);
+  // console.log(transactions);
   // console.log(wallet);
   // console.log(wallet?.wallet?._id);
 
