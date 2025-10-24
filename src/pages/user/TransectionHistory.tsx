@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useUserTransectionInfoQuery } from "@/redux/features/user/user.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,9 +37,9 @@ const TransectionHistory = () => {
 
   if (isLoading)
     return (
-      <p className="foreground-muted text-center mt-10">
-        Loading transactions...
-      </p>
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin h-10 w-10 text-primary" />
+      </div>
     );
 
   const transactions = transectionData?.data || [];

@@ -8,6 +8,7 @@ import {
   Plus,
   Wallet,
   History,
+  Loader2,
 } from "lucide-react";
 import { Link } from "react-router";
 import {
@@ -17,21 +18,35 @@ import {
 import type { TransactionData } from "@/types/transection";
 
 const UserOverview = () => {
-  const { data: userData } = useUserInfoQuery(undefined);
+  const { data: userData, isLoading: isUserLoading } =
+    useUserInfoQuery(undefined);
   const slug = userData?.data?.slug;
   // console.log(slug);
 
-  const { data: walletData } = useWalletInfoQuery(slug, { skip: !slug });
+  const { data: walletData, isLoading: isWalletLoading } = useWalletInfoQuery(
+    slug,
+    { skip: !slug }
+  );
 
-  const { data: transectionData } = useUserTransectionInfoQuery(slug, {
-    skip: !slug,
-  });
+  const { data: transectionData, isLoading: isTranLoading } =
+    useUserTransectionInfoQuery(slug, {
+      skip: !slug,
+    });
+
+  const isLoading = isUserLoading || isWalletLoading || isTranLoading;
 
   const wallet = walletData?.data;
   const transactions = transectionData?.data || [];
   // console.log(transactions);
   // console.log(wallet);
   // console.log(wallet?.wallet?._id);
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin h-10 w-10 text-primary" />
+      </div>
+    );
 
   return (
     <div className="space-y-8 p-6">
@@ -67,11 +82,11 @@ const UserOverview = () => {
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <Button
           variant="outline"
-          className="flex flex-col items-center justify-center h-24 rounded-xl"
+          className="flex flex-col items-center justify-center h-24 rounded-xl "
         >
           <Link
             to="/user/add-money"
-            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+            className="flex flex-col items-center justify-center h-24 rounded-xl "
           >
             <Plus className="w-5 h-5 mb-2" />
             <span>Add Money</span>
@@ -83,7 +98,7 @@ const UserOverview = () => {
         >
           <Link
             to="/user/send-money"
-            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+            className="flex flex-col items-center justify-center h-24 rounded-xl "
           >
             <ArrowUpRight className="w-5 h-5 mb-2" />
             <span>Send</span>
@@ -96,7 +111,7 @@ const UserOverview = () => {
         >
           <Link
             to="/user/withdraw-money"
-            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+            className="flex flex-col items-center justify-center h-24 rounded-xl "
           >
             <ArrowDownRight className="w-5 h-5 mb-2" />
             <span>Withdraw Money</span>
@@ -109,7 +124,7 @@ const UserOverview = () => {
         >
           <Link
             to="/user/transection-history"
-            className="flex flex-col items-center justify-center h-24 rounded-xl shadow"
+            className="flex flex-col items-center justify-center h-24 rounded-xl "
           >
             <History className="w-5 h-5 mb-2" />
             View All Transactions
