@@ -11,6 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import OriginPagination from "@/components/OriginPagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const TransectionHistory = () => {
   const { data: userData } = useUserInfoQuery(undefined);
@@ -24,6 +31,7 @@ const TransectionHistory = () => {
   );
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterType, setFilterType] = useState("ALL"); // Filter state
   const itemsPerPage = 10;
 
   if (isLoading)
@@ -34,9 +42,16 @@ const TransectionHistory = () => {
     );
 
   const transactions = transectionData?.data || [];
-  const totalPages = Math.ceil(transactions.length / itemsPerPage);
 
-  const paginatedTransactions = transactions.slice(
+  // Filter transactions by type
+  const filteredTransactions =
+    filterType === "ALL"
+      ? transactions
+      : transactions.filter((tran) => tran.type === filterType);
+
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+
+  const paginatedTransactions = filteredTransactions.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -50,13 +65,35 @@ const TransectionHistory = () => {
               Transaction History
             </CardTitle>
             <p className="text-sm text-foreground-muted mt-1">
-              {transactions.length} transactions found
+              {filteredTransactions.length} transactions found
             </p>
+          </div>
+
+          {/* Filter dropdown */}
+          <div className="mt-4 sm:mt-0">
+            <Select
+              value={filterType}
+              onValueChange={(value) => {
+                setFilterType(value);
+                setCurrentPage(1);
+              }}
+            >
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder="Filter by type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL">All</SelectItem>
+                <SelectItem value="WITHDRAW">Withdraw</SelectItem>
+                <SelectItem value="ADD_MONEY">Deposit</SelectItem>
+                <SelectItem value="SEND_MONEY">Transfer</SelectItem>
+                {/* Add more types if needed */}
+              </SelectContent>
+            </Select>
           </div>
         </CardHeader>
 
         <CardContent>
-          {transactions.length === 0 ? (
+          {filteredTransactions.length === 0 ? (
             <p className="foreground-muted text-center py-10">
               No transactions found.
             </p>
@@ -118,7 +155,6 @@ const TransectionHistory = () => {
                 </TableBody>
               </Table>
 
-              {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center mt-6">
                   <OriginPagination

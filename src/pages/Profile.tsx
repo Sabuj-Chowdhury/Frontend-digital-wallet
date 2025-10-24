@@ -27,21 +27,25 @@ const Profile = () => {
   const user = currentUser?.data;
 
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState(user?.name || "");
+  const [phone, setPhone] = useState(user?.phone || "");
+  const [password, setPassword] = useState("");
   const [address, setAddress] = useState(user?.address || "");
 
   const handleUpdate = async () => {
     try {
       await updateUser({
         id: user?._id,
-        data: { address },
+        data: { name, phone, password: password || undefined, address },
       }).unwrap();
 
-      toast.success("updated successfully!");
+      toast.success("Updated successfully!");
       setOpen(false);
       refetch();
+      setPassword(""); // clear password field
     } catch (err) {
       console.error(err);
-      toast.error(" Failed to update");
+      toast.error("Failed to update");
     }
   };
 
@@ -141,18 +145,39 @@ const Profile = () => {
               <DialogContent className="sm:max-w-[425px] rounded-xl">
                 <DialogHeader>
                   <DialogTitle className="text-lg font-semibold">
-                    Update Address
+                    Update Profile
                   </DialogTitle>
                   <DialogDescription className="text-sm text-muted-foreground">
-                    Enter your new address below and click save to update.
+                    Update your name, phone, password, or address. Previous data
+                    is pre-filled.
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="py-4">
+                <div className="space-y-3 py-2">
+                  <Input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter your name"
+                    readOnly
+                    disabled
+                  />
+                  <Input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your phone"
+                    readOnly
+                    disabled
+                  />
+                  <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter new password"
+                  />
                   <Input
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Enter new address"
+                    placeholder="Enter your address"
                   />
                 </div>
 
@@ -166,7 +191,7 @@ const Profile = () => {
                   </Button>
                   <Button
                     onClick={handleUpdate}
-                    disabled={updating || !address}
+                    disabled={updating || !name || !phone || !address}
                   >
                     {updating ? (
                       <Loader2 className="animate-spin h-4 w-4 mr-2" />
