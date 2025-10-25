@@ -6,7 +6,7 @@ A **secure, role-based, and user-friendly frontend application** for a Digital W
 
 ## 🔗 Live Link
 
-- **API Live Link:** [digital-wallet-api-nu.vercel.app](https://client-digital-wallet.vercel.app)
+- **Website Live Link:** [digital-wallet-api-nu.vercel.app](https://client-digital-wallet.vercel.app)
 
 ---
 
